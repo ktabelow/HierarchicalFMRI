@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/650516625.svg)](https://doi.org/10.5281/zenodo.16677811)
+
 # HierarchicalFMRI
 
 This repository contains the R scripts 
