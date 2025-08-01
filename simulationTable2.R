@@ -160,7 +160,7 @@ calculate_family_p_value <- function(pValues, kappa = 0.001) {
 
 
 
-MC <- 500; #Number of Monte Carlo runs
+MC <- 50; #Number of Monte Carlo runs
 Number_of_Aparc_Labels <- 8;
 my_n <- 11; #number of subjects
 signal_to_noise <- 1.5;
