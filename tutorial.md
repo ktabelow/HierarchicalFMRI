@@ -49,18 +49,19 @@ It will finally save a figure similar to the data part of Figure 4 of the paper 
 A dump of output of the script is written to disk as file for expert examination, the file name is set in line 23.
 
 
-## How to to use simulation script
+## How to use simulation script
 
-The simulation script first defines a function generate_fMRI_data() which generates data in lines 9-141. If you want to adjust this to other signal distributions and geometries, this function has to be rewritten. In its current form it takes the number of subjects of the simulation study and the signal SNR as arguments. The function creates simulated fmri data using the R package neuRosim and analyses the the data using the fmri R package fmri. As output it creates a matrix very similar to the experimental data described above. The difference is, that the columns 6, 7, 8, 9 contain the calculated voxelwise p-values for the first and second contrast (column 6 and 7) and the p-values for both contrast using cluster inference (column 8 and 9).
+The simulation script first defines a function generate_fMRI_data() which generates data in lines 9-141. If you want to adjust this to other signal distributions and geometries, this function has to be rewritten. In its current form it takes the number of subjects of the simulation study and the signal SNR as arguments. The function creates simulated fmri data using the R package neuRosim and analyses the data using the R package fmri. As output it creates a matrix very similar to the experimental data described above. The difference is, that the columns 6, 7, 8, 9 contain the calculated voxelwise p-values for the first and second contrast (column 6 and 7) and the p-values for both contrast using cluster inference (column 8 and 9).
 
 The main loop of the simulation is set up in lines 163-166, where you can choose the number of simulations, the number of spatial regions, the number of subjects, and the SNR for the data.
 
 The output is given in the variables, from which the Type-I and Type-II errors such as in Table 2 of https://doi.org/10.12688/f1000research.166549.1 can be immediately calculated.
 ```
-Aparc_rejected_over_MC
-Cluster_rejected_over_MC
-Mask_rejected_over_MC
+REGION_rejected_over_MC
+CLUSTER_rejected_over_MC
+VOXEL_rejected_over_MC
 ```
+These vectors give, for all 8 considered regions in the simulation data, the number of simulation runs, where a regional hypotheses has been rejected. The labels REGION (method from this paper), CLUSTER (cluster-based detection), and VOXEL (voxelwise inference) in the variable name represent the utilized methods.
 
-If you want to adjust the data generation, you can re-write the function generate_fMRI_data() returning a matrix as described above. Minor changes of the dimension of the data (line 14) or the temporal design (lines 17-28) can be easily done adjusting the values. The original function just uses the R package neuRosim to create the fmri data, adjusting the geometry of the activation can be done by changing the parameters of the respective functions. The fmri data is then analysed by R package fmri.  
+If you want to adjust the data generation, you can re-write the function generate_fMRI_data(). Minor changes of the dimension of the data (line 14) or the temporal design (lines 17-28) can be easily done adjusting the values. The original function just uses the R package neuRosim to create the fmri data, adjusting the geometry of the activation can be done by changing the parameters of the respective functions. The fmri data is then analysed by R package fmri.  
 
