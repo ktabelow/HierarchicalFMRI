@@ -160,7 +160,7 @@ calculate_family_p_value <- function(pValues, kappa = 0.001) {
 
 
 
-MC <- 50; #Number of Monte Carlo runs
+MC <- 500; #Number of Monte Carlo runs
 Number_of_Aparc_Labels <- 8;
 my_n <- 11; #number of subjects
 signal_to_noise <- 1.5;
@@ -172,10 +172,14 @@ kappa <- 0.01; #10 out of 1000
 ##    hypotheses to be not filtered out due to containing only "noise" 
 ## 2) influences the significance level needed for rejecting family p-values
 
+sink("out.txt")
 
-Aparc_rejected_over_MC <-rep(0L, Number_of_Aparc_Labels); 
-Cluster_rejected_over_MC <-rep(0L, Number_of_Aparc_Labels);
-Mask_rejected_over_MC <-rep(0L, Number_of_Aparc_Labels);
+for (signal_to_noise in c(0.75, 1.0, 1.25, 1.5, 1.75)) {
+#for (signal_to_noise in c(1.5)) {
+    
+REGION_rejected_over_MC <-rep(0L, Number_of_Aparc_Labels); 
+CLUSTER_rejected_over_MC <-rep(0L, Number_of_Aparc_Labels);
+VOXEL_rejected_over_MC <-rep(0L, Number_of_Aparc_Labels);
 
 #############################################
 #     Loop over simulation runs             #
@@ -293,7 +297,7 @@ for(run in (1:MC))
  {
   if(rejected[j])
   {
-   Aparc_rejected_over_MC[j] <- Aparc_rejected_over_MC[j] + 1;
+   REGION_rejected_over_MC[j] <- REGION_rejected_over_MC[j] + 1;
   }
  }
 
@@ -322,7 +326,7 @@ for(run in (1:MC))
   masked_p_values_label <- masked_aggregated_p_values_contrast2[masked_Aparc_labels == alabel];
   if(sum(masked_p_values_label < alpha_aparc / length_mask) > 1000 * kappa)
   {
-   Mask_rejected_over_MC[alabel] <- Mask_rejected_over_MC[alabel] + 1;
+   VOXEL_rejected_over_MC[alabel] <- VOXEL_rejected_over_MC[alabel] + 1;
   } 
  }
 
@@ -351,10 +355,17 @@ for(run in (1:MC))
   masked_Cluster_p_values_label <- masked_aggregated_Cluster_p_values_contrast2[masked_Cluster_Aparc_labels == alabel];
   if(sum(masked_Cluster_p_values_label < alpha_aparc / length_Cluster_mask) > 1000 * kappa)
   {
-   Cluster_rejected_over_MC[alabel] <- Cluster_rejected_over_MC[alabel] + 1;
+   CLUSTER_rejected_over_MC[alabel] <- CLUSTER_rejected_over_MC[alabel] + 1;
   } 
  }
 
 } # end of main simulation loop
 
+print(paste("SNR", signal_to_noise))
+print(REGION_rejected_over_MC)
+print(CLUSTER_rejected_over_MC)
+print(VOXEL_rejected_over_MC)
 
+}
+
+closeAllConnections()
