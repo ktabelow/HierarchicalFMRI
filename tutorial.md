@@ -1,10 +1,16 @@
 # Tutorial
 
-## How to use the scripts on expertimental data
+## How to use the scripts on experimental data
 
 ### Data preparation 
 
-The script expects input data as csv file with the following columns (use the same names for the script to work). The data used in the paper is published at https://doi.org/10.20347/wias.data.9. If you want to use your own data, create the input data along the lines and use the script realDataFigure2.R to process it, see below.
+The script expects input data as csv file with the following columns (use the same names for the script to work directly). The data used in the paper is published at https://doi.org/10.20347/wias.data.9. If you want to use your own data, create the input data along the lines and use the script realDataFigure2.R to process it, see below.
+
+| Participant | X   | Y   | Z   | Aparc                           | PC2_Maske_STAT | PC2_Maske_p | PC2_Compr_STAT | PC2_Compr_p |
+|-------------|-----|-----|-----|---------------------------------|----------------|-------------|----------------|-------------|
+| subj1       | 137 | 61  | 116 | ctx_lh_G_and_S_transv_frontopol | -2,40265       | 0,016475    | 0,77007        | 0,441447    |
+| subj1       | 136 | 62  | 115 | ctx_lh_G_and_S_transv_frontopol | -2,873713      | 0,00415     | 0,42858        | 0,668372    |
+| ...         | ... | ... | ... | ...                             | ...            | ...         | ...            | ...         |
 
 #### Participants
 
@@ -16,27 +22,31 @@ X, Y, and Z coordinate of the voxel under consideration in this line of the tabl
 
 #### Aparc
 
-Label of spatial region from the corresponding atlas, an example is "ctx_lh_G_and_S_transv_frontopol". As the scripts where developed using Aparc labels, the column is named as such. However, any regional atlas can be used. (For compatibility reasons with the published data https://doi.org/10.20347/wias.data.9 we leave the column name as it is though.)
+Label of spatial region from the corresponding atlas, such as "ctx_lh_G_and_S_transv_frontopol". As the scripts where developed using Aparc labels, the column is named as such. However, any regional atlas can be used. (For compatibility reasons with the published data https://doi.org/10.20347/wias.data.9 we leave the column name as it is though.)
 
 #### PC2_Maske_STAT
 
-??? (This column is discarded by the script and only kept to be compatible with the published dataset at https://doi.org/10.20347/wias.data.9)
+PC2_Maske_STAT contains the statistical values for a filter. In the Siegmund et al. study, this was program comprehension versus rest. The provided statistical values are the internal values from BrainVoyager. 
+
+For our purpose, we directly use the p-value of the next column PC2_Maske_p. Thus, this column is discarded by the script and only kept to be compatible with the [published dataset](https://doi.org/10.20347/wias.data.9).
 
 #### PC2_Maske_p
 
-p-value ...
+PC2_Maske_p contains the p-values for a single voxel of the filter. In the Siegmund et al. study, this was comprehension versus rest.
 
 #### PC2_Compr_STAT
 
-??? (This column is discarded by the script and only kept to be compatible with the published dataset at https://doi.org/10.20347/wias.data.9)
+PC2_Compr_STAT contains the statistical values for the contrast of interest. In the Siegmund et al. study, this was bottom-up program comprehension versus finding syntax errors. The provided statistical values are the internal values from BrainVoyager. 
+
+For our purpose, we directly use the p-value of the next column PC2_Compr_p. Thus, this column is discarded by the script and only kept to be compatible with the [published dataset](https://doi.org/10.20347/wias.data.9).
 
 #### PC2_Compr_p
 
-p-value ...
+PC2_Compr_p contains the p-values for a single voxel of the contrast of interest. In the Siegmund et al. study, this was bottom-up program comprehension versus finding syntax errors.
 
 ### Using the script realDataFigure2.R
 
-To run the script on the data run this script with potential adjustments for your own data: Line 25 contains the location of the csv file described above and reads the data using R's read.csv() function. This can be an online ressource or some local file. If you generate your data already without column 6 and 8 (PC2_Maske_STAT, PC2_Compr_STAT) because they are not needed anyway, adjust the line 25 to
+To replicate our analysis, you can directly run the script. To run this script on your own data, there are potential adjustments for your own data: Line 25 contains the location of the csv file described above and reads the data using R's read.csv() function. This can be an online ressource or some local file. If you generate your data already without column 6 and 8 (PC2_Maske_STAT, PC2_Compr_STAT) because they are not needed anyway, adjust the line 25 to
 ```
 data <- read.csv("filelocation") 
 ```
