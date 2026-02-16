@@ -34,6 +34,10 @@ The script should automatically download the data from the resource.
 The script realDataFigure2.R creates the p-value in Figure 2 of the above mentioned paper. 
 The script simulationTable2.R creates type-I and type-II error rates using different methods in three vectors: Aparc_rejected_over_MC (method from this paper), Cluster_rejected_over_MC (cluster-corrected inference), Mask_rejected_over_MC (voxel-wise inference).
 
+## Tutorial
+
+Both scripts, the simulation and real data analysis, can be adjusted to your own needs. Please refer to the [tutorial](tutorial.md) for more details.
+
 ## Authors
 
 - Tabelow, Karsten, karsten.tabelow@wias-berlin.de, https://github.com/ktabelow 
